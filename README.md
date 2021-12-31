@@ -22,6 +22,6 @@ License is Beerware
 
 # Screenshots
 
-![coil setting](https://github.com/unixhead/pyModbusServerGUI/blob/main/ss-input-registers.png?raw=true)
+![coil setting](https://github.com/unixhead/pyModbusServerGUI/blob/main/ss-coils-GUI.png?raw=true)
 
 ![register setting](https://github.com/unixhead/pyModbusServerGUI/blob/main/ss-input-registers.png?raw=true)
