@@ -1,11 +1,11 @@
 # pyModbusServerGUI
-Basic GUI to run a Modbus Server for testing purposes. Lets you set which coils respond as enabled and put values for input registers, also can set them to random values.
+Basic GUI to run a Modbus Server for testing purposes where you tell it what data to present rather than connecting it to some OT kit for a data feed. It lets you set which coils respond as enabled and put values for input registers, also can set them to random values. 
 
 Makes use of pyModbusTCP for all the hard work: https://github.com/sourceperl/pyModbusTCP
 
 GUI components use the dearpygui framework: https://github.com/hoffstadt/DearPyGui
 
-Roadmap is to add in discrete inputs, analogue output registers, support updating the values being updated by a remote client (you can update them now but it won't be reflected in the GUI), then maybe allow for changing values over time.
+Roadmap is to add in discrete inputs, analogue output registers, support updating the values being updated by a remote client (you can update them now but it won't be reflected in the GUI), then maybe allow for changing values over time. May even evolve it to take a true data feed, almost like a proper Modbus server!
 
 
 # Usage
