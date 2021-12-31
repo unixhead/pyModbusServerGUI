@@ -21,10 +21,10 @@ Download all files, then run with:
 There should be a drop-down list of the available IP addresses on the machine to pick which the server will listen on. Standard Modbus/TCP port is 502 but that'd require running with root privileges. 
 
 To set coils there are two options:
- - Use the Coils GUI to click on which coil addresses will be enabled or just use the randomise button. 
+ - Use the Coils GUI to click on which coil addresses will be enabled or just use the randomise button. The address of each coil is found by adding the X & Y header values together.
  - Type/paste in a comma separated list of values for the addresses of coils to enable.
 
-To set input register values, type them into the relevant box on the grid, at the moment I've only enabled 1000 values otherwise the table gets enormous. Might add some kind of CSV import if needed.
+To set input register values, type them into the relevant box on the grid, at the moment I've only enabled 1000 values otherwise the table gets enormous. Might add some kind of CSV import if needed. Again the true address of the register is found by adding the X and Y header values, e.g. on the screenshot below the value "435" will be found at address 30042.
 
 
 Debug info gets dumped into the console so if it goes wrong then there may be some hints in the terminal you launched it from. 
