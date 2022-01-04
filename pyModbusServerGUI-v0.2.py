@@ -335,7 +335,7 @@ def clearRegisters(sender, app_data, user_data):
     global registerList
 
     for i in range(1,NUMREGISTERS):
-        dpg.configure_item("registers" + str(i), default_value="")
+        dpg.configure_item("registers" + str(i), default_value="0")
     
     registerList = False
     registerList = [0] * MAXREGISTERS
@@ -347,6 +347,9 @@ def registerTextChanged(sender, app_data, user_data):
     debugLog(f"registerTextChangedsender - sender: {sender}, \t app_data: {app_data}, \t user_data: {user_data}")
     startModbusServer("uNF","uNF","uNF")
     global registerList 
+    if len(app_data) == 0:
+        app_data = 0
+        dpg.configure_item(sender, default_value="0")
 
     registerList[user_data] = app_data;  
     #debugLog("registerTextChanged: " + str(registerList))
@@ -356,6 +359,19 @@ def registerTextChanged(sender, app_data, user_data):
 
 def randomiseOutputRegisters(sender, app_data, user_data):
         debugLog(f"randomiseOutputRegisters - sender: {sender}, \t app_data: {app_data}, \t user_data: {user_data}")
+        startModbusServer("uNF","uNF","uNF")
+        global outputRegisterList
+        
+        for i in range(1,NUMREGISTERS):
+            randRegisterValue = random.randint(0,65535)
+            outputRegisterList[i] = randRegisterValue
+            try: 
+                dpg.configure_item("outputregisters" + str(i), default_value=randRegisterValue) 
+            except: # not sure why this sometimes fails
+                debugLog("failed to update GUI field: outputregisters" + str(i))
+        modbusServer.setRegisterValues(registerList, "output")
+
+
 
 
 def clearOutputRegisters(sender, app_data, user_data):
@@ -364,7 +380,7 @@ def clearOutputRegisters(sender, app_data, user_data):
         global outputRegisterList
 
         for i in range(1,NUMREGISTERS):
-            dpg.configure_item("outputregisters" + str(i), default_value="")
+            dpg.configure_item("outputregisters" + str(i), default_value="0")
         
         outputRegisterList = False
         outputRegisterList = [0] * MAXREGISTERS
@@ -373,12 +389,18 @@ def clearOutputRegisters(sender, app_data, user_data):
         modbusServer.clearRegisterValues("output")
 
 
+   
+
+
 
 def outputRegisterTextChanged(sender, app_data, user_data):
         debugLog(f"outputRegisterTextChanged - sender: {sender}, \t app_data: {app_data}, \t user_data: {user_data}")
         startModbusServer("uNF","uNF","uNF")
         global outputRegisterList 
-
+        if len(app_data) == 0:
+            app_data = 0
+            dpg.configure_item(sender, default_value="0")
+            
         outputRegisterList[user_data] = app_data;  
         modbusServer.setRegisterValues(outputRegisterList, "output")
 
