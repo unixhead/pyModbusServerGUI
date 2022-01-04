@@ -207,7 +207,7 @@ def coilClicked(sender, app_data, user_data):
         dpg.highlight_table_cell(coil_table_id, row, col, [230, 0, 0, 100])
         coilList[user_data] = 0;
         
-    debugLog("coilClicked:" + str(coilList)   )
+    #debugLog("coilClicked:" + str(coilList)   )
 
     modbusServer.setCoilBits(coilList)
 
@@ -234,10 +234,17 @@ def randomiseCoils(sender, app_data, user_data):
             dpg.highlight_table_cell(coil_table_id, row, col, [0, 230, 0, 100])
             coilList[i] = 1;
             #print("coils" + str(i))
-            dpg.configure_item("coils" + str(i), default_value=True)
+            #no idea why these sometimes fail, catch the exception and ignore it as it doesn't really impact much
+            try:
+                dpg.configure_item("coils" + str(i), default_value=True)
+            except:
+                debugLog("failed to update coil value to true for:" + str(i))
         else:
-            dpg.configure_item("coils" + str(i), default_value=False)
-            dpg.highlight_table_cell(coil_table_id, row, col, [230, 0, 0, 100])
+            try:
+                dpg.configure_item("coils" + str(i), default_value=False)
+                dpg.highlight_table_cell(coil_table_id, row, col, [230, 0, 0, 100])
+            except:
+                debugLog("failed to update coil value to false for:" + str(i))
             coilList[i] = 0;
 
     #debugLog("RandomiseCoils array:" + str(coilList))
@@ -315,8 +322,10 @@ def randomiseRegisters(sender, app_data, user_data):
     for i in range(1,NUMREGISTERS):
         randRegisterValue = random.randint(0,65535)
         registerList[i] = randRegisterValue
-        dpg.configure_item("registers" + str(i), default_value=randRegisterValue) #set table entry to zero
-
+        try: 
+            dpg.configure_item("registers" + str(i), default_value=randRegisterValue) #set table entry to zero
+        except: # not sure why this sometimes fails
+            debugLog("failed to update GUI field: registers" + str(i))
     modbusServer.setRegisterValues(registerList)
 
 
@@ -363,7 +372,7 @@ def clearOutputRegisters(sender, app_data, user_data):
         #debugLog("ClearCoils: " + str(coilList))
         modbusServer.clearRegisterValues("output")
 
-        
+
 
 def outputRegisterTextChanged(sender, app_data, user_data):
         debugLog(f"outputRegisterTextChanged - sender: {sender}, \t app_data: {app_data}, \t user_data: {user_data}")
